@@ -1,8 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{17543E18-6B0F-4B66-91C2-B89FAB5F1EA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{C2BC9E0A-71C8-4ABE-A6F6-2CDC5B1593DC}"
+	ProjectSection(SolutionItems) = preProject
+		..\Documents\Properties\SharedAssemblyInfo.cs = ..\Documents\Properties\SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.RequireHttps", "WebApi.RequireHttps\WebApi.RequireHttps.csproj", "{590320BF-98E9-4743-A279-CE03AFEF18AD}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{590320BF-98E9-4743-A279-CE03AFEF18AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590320BF-98E9-4743-A279-CE03AFEF18AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590320BF-98E9-4743-A279-CE03AFEF18AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590320BF-98E9-4743-A279-CE03AFEF18AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C2BC9E0A-71C8-4ABE-A6F6-2CDC5B1593DC} = {17543E18-6B0F-4B66-91C2-B89FAB5F1EA0}
 	EndGlobalSection
 EndGlobal
