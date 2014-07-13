@@ -1,5 +1,7 @@
 ﻿using Aliencube.WebApi.RequireHttps.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
@@ -50,7 +52,28 @@ namespace Aliencube.WebApi.RequireHttps
                 return;
             }
 
+            if (actionContext.Request.IsLocal())
+            {
+                base.OnAuthorization(actionContext);
+                return;
+            }
+
             if (actionContext.Request.RequestUri.Scheme == Uri.UriSchemeHttps)
+            {
+                base.OnAuthorization(actionContext);
+                return;
+            }
+
+            //  This is for AppHarbor specified implementation.
+            //  https://gist.github.com/runesoerensen/915869,
+            //  https://gist.github.com/geersch/7710361
+            IEnumerable<string> values;
+            var scheme = actionContext.Request
+                                      .Headers
+                                      .TryGetValues("X-Forwarded-Proto", out values)
+                             ? values.FirstOrDefault()
+                             : null;
+            if (!String.IsNullOrWhiteSpace(scheme) && scheme == Uri.UriSchemeHttps)
             {
                 base.OnAuthorization(actionContext);
                 return;
