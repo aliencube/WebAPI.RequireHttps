@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="ContextUtil.cs" />
     <Compile Include="AspValidatorTest.cs" />
+    <Compile Include="RequireHttpsAttributeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequireHttpsHelperTest.cs" />
   </ItemGroup>
