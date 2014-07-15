@@ -1,7 +1,5 @@
 ﻿using Aliencube.WebApi.RequireHttps.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
@@ -12,15 +10,16 @@ namespace Aliencube.WebApi.RequireHttps
     /// <summary>
     /// This represents the customer action filter attribute entity to enable HTTPS connection.
     /// </summary>
-    public class RequreHttpsAttribute : AuthorizationFilterAttribute
+    public class RequireHttpsAttribute : AuthorizationFilterAttribute
     {
         private Type _requireHttpsConfigurationSettingsProviderType;
         private IRequireHttpsConfigurationSettingsProvider _settings;
+        private IRequireHttpsHelper _helper;
 
         /// <summary>
         /// Initialises a new instance of the RequreHttpsAttribute class.
         /// </summary>
-        public RequreHttpsAttribute()
+        public RequireHttpsAttribute()
         {
         }
 
@@ -37,6 +36,7 @@ namespace Aliencube.WebApi.RequireHttps
             {
                 this._requireHttpsConfigurationSettingsProviderType = value;
                 this._settings = Activator.CreateInstance(this._requireHttpsConfigurationSettingsProviderType) as IRequireHttpsConfigurationSettingsProvider;
+                this._helper = new RequireHttpsHelper(this._settings);
             }
         }
 
@@ -46,43 +46,17 @@ namespace Aliencube.WebApi.RequireHttps
         /// <param name="actionContext">The action context, which encapsulates information for using <c>System.Web.Http.Filters.AuthorizationFilterAttribute</c>.</param>
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            if (!this._settings.UseHttps)
+            var isHttpsConnection = this._helper.IsHttpsConnection(actionContext);
+            if (!isHttpsConnection)
             {
-                base.OnAuthorization(actionContext);
+                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                                         {
+                                             ReasonPhrase = "HTTPS Required"
+                                         };
                 return;
             }
 
-            if (actionContext.Request.IsLocal())
-            {
-                base.OnAuthorization(actionContext);
-                return;
-            }
-
-            if (actionContext.Request.RequestUri.Scheme == Uri.UriSchemeHttps)
-            {
-                base.OnAuthorization(actionContext);
-                return;
-            }
-
-            //  This is for AppHarbor specified implementation.
-            //  https://gist.github.com/runesoerensen/915869,
-            //  https://gist.github.com/geersch/7710361
-            IEnumerable<string> values;
-            var scheme = actionContext.Request
-                                      .Headers
-                                      .TryGetValues("X-Forwarded-Proto", out values)
-                             ? values.FirstOrDefault()
-                             : null;
-            if (!String.IsNullOrWhiteSpace(scheme) && scheme == Uri.UriSchemeHttps)
-            {
-                base.OnAuthorization(actionContext);
-                return;
-            }
-
-            actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
-                                     {
-                                         ReasonPhrase = "HTTPS Required"
-                                     };
+            base.OnAuthorization(actionContext);
         }
     }
 }
