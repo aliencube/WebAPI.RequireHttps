@@ -1,11 +1,12 @@
-﻿using System.Web.Http.Controllers;
+﻿using System;
+using System.Web.Http.Controllers;
 
 namespace Aliencube.WebApi.RequireHttps.Interfaces
 {
     /// <summary>
     /// This provides interfaces to the RequireHttpsHelper class.
     /// </summary>
-    public interface IRequireHttpsHelper
+    public interface IRequireHttpsHelper : IDisposable
     {
         /// <summary>
         /// Gets the require https configuration settings.

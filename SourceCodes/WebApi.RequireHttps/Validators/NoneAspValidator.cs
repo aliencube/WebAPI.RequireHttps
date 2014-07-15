@@ -1,4 +1,4 @@
-﻿using System.Web.Http.Controllers;
+﻿using System.Net.Http;
 
 namespace Aliencube.WebApi.RequireHttps.Validators
 {
@@ -10,9 +10,9 @@ namespace Aliencube.WebApi.RequireHttps.Validators
         /// <summary>
         /// Validates the action context for application service provider.
         /// </summary>
-        /// <param name="actionContext">The action context instance.</param>
+        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
         /// <returns>Returns <c>True</c>, if validated; otherwise returns <c>False</c>.</returns>
-        public override bool Validate(HttpActionContext actionContext)
+        public override bool Validate(HttpRequestMessage request)
         {
             return true;
         }

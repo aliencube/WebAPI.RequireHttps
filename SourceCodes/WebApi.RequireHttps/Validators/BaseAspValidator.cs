@@ -1,5 +1,5 @@
 ﻿using Aliencube.WebApi.RequireHttps.Interfaces;
-using System.Web.Http.Controllers;
+using System.Net.Http;
 
 namespace Aliencube.WebApi.RequireHttps.Validators
 {
@@ -11,9 +11,9 @@ namespace Aliencube.WebApi.RequireHttps.Validators
         /// <summary>
         /// Validates the action context for application service provider.
         /// </summary>
-        /// <param name="actionContext">The action context instance.</param>
+        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
         /// <returns>Returns <c>True</c>, if validated; otherwise returns <c>False</c>.</returns>
-        public abstract bool Validate(HttpActionContext actionContext);
+        public abstract bool Validate(HttpRequestMessage request);
 
         /// <summary>
         /// Creates the ApplicationServiceProviderValidator instance based on the ApplicationServiceProviderType value.
@@ -32,6 +32,14 @@ namespace Aliencube.WebApi.RequireHttps.Validators
                     return new NoneAspValidator();
                     break;
             }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing,
+        /// or resetting unmanaged resources.
+        /// </summary>
+        public virtual void Dispose()
+        {
         }
     }
 }

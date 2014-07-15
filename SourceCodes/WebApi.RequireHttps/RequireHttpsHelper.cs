@@ -51,9 +51,17 @@ namespace Aliencube.WebApi.RequireHttps
             var result = this.Settings
                              .ApplicationServiceProviders
                              .Select(BaseAspValidator.CreateInstance)
-                             .Select(validator => validator.Validate(actionContext))
+                             .Select(validator => validator.Validate(actionContext.Request))
                              .All(validated => validated);
             return result;
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing,
+        /// or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
         }
     }
 }
