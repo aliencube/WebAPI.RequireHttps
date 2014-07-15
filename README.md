@@ -8,6 +8,66 @@
 This library is based on the article, [Working with SSL in Web API](http://www.asp.net/web-api/overview/security/working-with-ssl-in-web-api).
 
 
+## Getting Started ##
+
+**WebAPI.RequireHttps** is a custom action filter attribute, therefore, it should be used for either Web API controllers or individual actions.
+
+
+### Controller Level Definition ###
+
+```csharp
+[RequireHttps(RequireHttpsConfigurationSettingsProviderType =
+                  typeof(RequireHttpsConfigurationSettingsProvider))]
+public class SampleApiController : ApiController
+{
+    ...
+}
+```
+
+
+### Action Level Definition ###
+
+```csharp
+public class SampleApiController : ApiController
+{
+    [RequireHttps(RequireHttpsConfigurationSettingsProviderType =
+                      typeof(RequireHttpsConfigurationSettingsProvider))]
+    public HttpResponseMessage Get()
+    {
+        ...
+    }
+}
+```
+
+
+## Configuration ##
+
+In order to configure the `RequireHttpsAttribute` instance, `Web.config` should be considered.
+
+```xml
+<applicationSettings>
+    <Aliencube.WebApi.RequireHttps.Properties.Settings>
+        <setting name="BypassHttps" serializeAs="String">
+            <value>False</value>
+        </setting>
+        <setting name="ApplicationServiceProviders" serializeAs="String">
+            <value />
+        </setting>
+    </Aliencube.WebApi.RequireHttps.Properties.Settings>
+</applicationSettings>
+```
+
+* `BypassHttps`: If it is set to `true`, the `RequireHttpsAttribute` instance assumes the request is over HTTPS connection. Default value is `false`.
+* `ApplicationServiceProviders`: In case that additional check based on application service provider is required, this should be defined. Currently (version 1.5.0.0), this value can be either, `Default` or `AppHarbor`. Default value is `nil`.
+
+
+# Contribution #
+
+Your contribution is always welcome! All your work should be done in the`dev` branch. Once you finish your work, please send us a pull request on `dev` for review. Make sure that all your changes **MUST** be covered with test codes; otherwise yours won't get accepted.
+
+
+
+
 ## License ##
 
 **WebAPI.RequireHttps** is released under [MIT License](http://opensource.org/licenses/MIT).
