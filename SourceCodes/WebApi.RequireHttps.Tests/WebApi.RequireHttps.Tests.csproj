@@ -7,8 +7,8 @@
     <ProjectGuid>{D1787ADE-E703-4F89-B94F-8A0499ABBA1C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebApi.RequireHttps.Tests</RootNamespace>
-    <AssemblyName>WebApi.RequireHttps.Tests</AssemblyName>
+    <RootNamespace>Aliencube.WebApi.RequireHttps.Tests</RootNamespace>
+    <AssemblyName>Aliencube.WebApi.RequireHttps.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
