@@ -46,17 +46,17 @@ namespace Aliencube.WebApi.RequireHttps
         /// <param name="actionContext">The action context, which encapsulates information for using <c>System.Web.Http.Filters.AuthorizationFilterAttribute</c>.</param>
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            var validated = this._helper.ValidateHttpsConnection(actionContext);
-            if (validated)
+            var isHttpsConnection = this._helper.IsHttpsConnection(actionContext);
+            if (!isHttpsConnection)
             {
-                base.OnAuthorization(actionContext);
+                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
+                                         {
+                                             ReasonPhrase = "HTTPS Required"
+                                         };
                 return;
             }
 
-            actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden)
-                                     {
-                                         ReasonPhrase = "HTTPS Required"
-                                     };
+            base.OnAuthorization(actionContext);
         }
     }
 }

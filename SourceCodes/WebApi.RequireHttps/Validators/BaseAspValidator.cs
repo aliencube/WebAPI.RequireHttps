@@ -24,12 +24,16 @@ namespace Aliencube.WebApi.RequireHttps.Validators
         {
             switch (aspType)
             {
+                case ApplicationServiceProviderType.Default:
+                    return new DefaultAspValidator();
+                    break;
+
                 case ApplicationServiceProviderType.AppHarbor:
                     return new AppHarborAspValidator();
                     break;
 
                 default:
-                    return new NoneAspValidator();
+                    return new UnknownAspValidator();
                     break;
             }
         }

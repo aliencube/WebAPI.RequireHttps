@@ -10,7 +10,7 @@ namespace Aliencube.WebApi.RequireHttps.Interfaces
         /// <summary>
         /// Gets the value that specifies whether to use HTTPS connection or not.
         /// </summary>
-        bool UseHttps { get; }
+        bool BypassHttps { get; }
 
         /// <summary>
         /// Gets the application service providers.

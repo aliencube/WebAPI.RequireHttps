@@ -74,10 +74,13 @@
     </Compile>
     <Compile Include="RequireHttpsAttribute.cs" />
     <Compile Include="RequireHttpsHelper.cs" />
-    <Compile Include="Validators\NoneAspValidator.cs" />
+    <Compile Include="Validators\DefaultAspValidator.cs" />
+    <Compile Include="Validators\UnknownAspValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

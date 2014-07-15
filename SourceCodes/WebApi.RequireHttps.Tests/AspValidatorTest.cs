@@ -36,10 +36,10 @@ namespace WebApi.RequireHttps.Tests
         #region Tests
 
         [Test]
-        [TestCase(ApplicationServiceProviderType.None, null, null, true)]
-        [TestCase(ApplicationServiceProviderType.None, "X-CustomHeader", "ftp", true)]
-        [TestCase(ApplicationServiceProviderType.None, "X-Forwarded-Proto", "https", true)]
-        [TestCase(ApplicationServiceProviderType.None, "X-Forwarded-Proto", "http", true)]
+        [TestCase(ApplicationServiceProviderType.Default, null, null, true)]
+        [TestCase(ApplicationServiceProviderType.Default, "X-CustomHeader", "ftp", true)]
+        [TestCase(ApplicationServiceProviderType.Default, "X-Forwarded-Proto", "https", true)]
+        [TestCase(ApplicationServiceProviderType.Default, "X-Forwarded-Proto", "http", true)]
         [TestCase(ApplicationServiceProviderType.AppHarbor, null, null, false)]
         [TestCase(ApplicationServiceProviderType.AppHarbor, "X-CustomHeader", "ftp", false)]
         [TestCase(ApplicationServiceProviderType.AppHarbor, "X-Forwarded-Proto", "https", true)]

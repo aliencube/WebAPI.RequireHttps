@@ -3,9 +3,9 @@
 namespace Aliencube.WebApi.RequireHttps.Validators
 {
     /// <summary>
-    /// This represents the ApplicationServiceProviderValidator entity for default.
+    /// This represents the ApplicationServiceProviderValidator entity for unknown.
     /// </summary>
-    public class NoneAspValidator : BaseAspValidator
+    public class UnknownAspValidator : BaseAspValidator
     {
         /// <summary>
         /// Validates the action context for application service provider.
@@ -14,7 +14,7 @@ namespace Aliencube.WebApi.RequireHttps.Validators
         /// <returns>Returns <c>True</c>, if validated; otherwise returns <c>False</c>.</returns>
         public override bool Validate(HttpRequestMessage request)
         {
-            return true;
+            return false;
         }
     }
 }

@@ -27,18 +27,18 @@ namespace Aliencube.WebApi.RequireHttps
         public IRequireHttpsConfigurationSettingsProvider Settings { get; private set; }
 
         /// <summary>
-        /// Validates whether the HTTPS connection is allowed or not.
+        /// Checks whether the current connection is over HTTPS or not.
         /// </summary>
         /// <param name="actionContext">The action context instance.</param>
-        /// <returns>Returns <c>True</c>, if the HTTPS connection is allowed; otherwise returns <c>False</c>.</returns>
-        public bool ValidateHttpsConnection(HttpActionContext actionContext)
+        /// <returns>Returns <c>True</c>, if the current connection is over HTTPS; otherwise returns <c>False</c>.</returns>
+        public bool IsHttpsConnection(HttpActionContext actionContext)
         {
             if (actionContext == null)
             {
                 throw new ArgumentNullException("actionContext");
             }
 
-            if (!this.Settings.UseHttps)
+            if (this.Settings.BypassHttps)
             {
                 return true;
             }
@@ -48,11 +48,10 @@ namespace Aliencube.WebApi.RequireHttps
                 return true;
             }
 
-            var result = this.Settings
-                             .ApplicationServiceProviders
-                             .Select(BaseAspValidator.CreateInstance)
-                             .Select(validator => validator.Validate(actionContext.Request))
-                             .All(validated => validated);
+            var providers = this.Settings.ApplicationServiceProviders;
+            var result = providers.Select(BaseAspValidator.CreateInstance)
+                                  .Select(validator => validator.Validate(actionContext.Request))
+                                  .All(validated => validated);
             return result;
         }
 

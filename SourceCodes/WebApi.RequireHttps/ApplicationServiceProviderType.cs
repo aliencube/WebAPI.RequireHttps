@@ -6,13 +6,18 @@
     public enum ApplicationServiceProviderType
     {
         /// <summary>
-        /// Identifies no application service provider.
+        /// Identifies unknown application service provider.
         /// </summary>
-        None = 0,
+        Unknown = 0,
+
+        /// <summary>
+        /// Identifies default application service provider.
+        /// </summary>
+        Default = 1,
 
         /// <summary>
         /// Identifies the application service provider is AppHarbor.
         /// </summary>
-        AppHarbor = 1,
+        AppHarbor = 2,
     }
 }

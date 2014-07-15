@@ -24,9 +24,9 @@ namespace Aliencube.WebApi.RequireHttps
         /// <summary>
         /// Gets the value that specifies whether to use HTTPS connection or not.
         /// </summary>
-        public bool UseHttps
+        public bool BypassHttps
         {
-            get { return this._settings.UseHttps; }
+            get { return this._settings.BypassHttps; }
         }
 
         /// <summary>
@@ -36,17 +36,17 @@ namespace Aliencube.WebApi.RequireHttps
         {
             get
             {
-                ApplicationServiceProviderType result;
-                var types = this._settings
-                                .ApplicationServiceProviders
-                                .Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(p => Enum.TryParse(p, true, out result) ? result : ApplicationServiceProviderType.None)
-                                .Where(p => p != ApplicationServiceProviderType.None)
-                                .ToList();
+                var value = this._settings.ApplicationServiceProviders;
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    return new List<ApplicationServiceProviderType> { ApplicationServiceProviderType.Default };
+                }
 
-                return types.Any()
-                           ? types
-                           : new List<ApplicationServiceProviderType> { ApplicationServiceProviderType.None };
+                ApplicationServiceProviderType result;
+                var providers = value.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                     .Select(p => Enum.TryParse(p, true, out result) ? result : ApplicationServiceProviderType.Default);
+
+                return providers;
             }
         }
     }

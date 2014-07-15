@@ -14,10 +14,10 @@ namespace Aliencube.WebApi.RequireHttps.Interfaces
         IRequireHttpsConfigurationSettingsProvider Settings { get; }
 
         /// <summary>
-        /// Validates whether the HTTPS connection is allowed or not.
+        /// Checks whether the current connection is over HTTPS or not.
         /// </summary>
         /// <param name="actionContext">The action context instance.</param>
-        /// <returns>Returns <c>True</c>, if the HTTPS connection is allowed; otherwise returns <c>False</c>.</returns>
-        bool ValidateHttpsConnection(HttpActionContext actionContext);
+        /// <returns>Returns <c>True</c>, if the current connection is over HTTPS; otherwise returns <c>False</c>.</returns>
+        bool IsHttpsConnection(HttpActionContext actionContext);
     }
 }
