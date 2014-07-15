@@ -59,6 +59,11 @@
     <Compile Include="..\..\Documents\Properties\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ApplicationServiceProviderType.cs" />
+    <Compile Include="Validators\AppHarborAspValidator.cs" />
+    <Compile Include="Validators\BaseAspValidator.cs" />
+    <Compile Include="Interfaces\IApplicationServiceProviderValidator.cs" />
+    <Compile Include="Interfaces\IRequireHttpsHelper.cs" />
     <Compile Include="RequireHttpsConfigurationSettingsProvider.cs" />
     <Compile Include="Interfaces\IRequireHttpsConfigurationSettingsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,7 +72,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RequreHttpsAttribute.cs" />
+    <Compile Include="RequireHttpsAttribute.cs" />
+    <Compile Include="RequireHttpsHelper.cs" />
+    <Compile Include="Validators\NoneAspValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

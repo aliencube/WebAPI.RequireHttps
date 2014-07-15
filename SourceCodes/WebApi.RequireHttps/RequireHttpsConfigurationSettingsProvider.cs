@@ -1,5 +1,8 @@
 using Aliencube.WebApi.RequireHttps.Interfaces;
 using Aliencube.WebApi.RequireHttps.Properties;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Aliencube.WebApi.RequireHttps
 {
@@ -24,6 +27,27 @@ namespace Aliencube.WebApi.RequireHttps
         public bool UseHttps
         {
             get { return this._settings.UseHttps; }
+        }
+
+        /// <summary>
+        /// Gets the application service providers.
+        /// </summary>
+        public IEnumerable<ApplicationServiceProviderType> ApplicationServiceProviders
+        {
+            get
+            {
+                ApplicationServiceProviderType result;
+                var types = this._settings
+                                .ApplicationServiceProviders
+                                .Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                .Select(p => Enum.TryParse(p, true, out result) ? result : ApplicationServiceProviderType.None)
+                                .Where(p => p != ApplicationServiceProviderType.None)
+                                .ToList();
+
+                return types.Any()
+                           ? types
+                           : new List<ApplicationServiceProviderType> { ApplicationServiceProviderType.None };
+            }
         }
     }
 }
