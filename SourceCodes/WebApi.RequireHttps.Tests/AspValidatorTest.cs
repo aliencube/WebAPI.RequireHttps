@@ -1,4 +1,3 @@
-using Aliencube.WebApi.RequireHttps;
 using Aliencube.WebApi.RequireHttps.Interfaces;
 using Aliencube.WebApi.RequireHttps.Validators;
 using FluentAssertions;
@@ -6,7 +5,7 @@ using NUnit.Framework;
 using System;
 using System.Net.Http;
 
-namespace WebApi.RequireHttps.Tests
+namespace Aliencube.WebApi.RequireHttps.Tests
 {
     [TestFixture]
     public class AspValidatorTest
@@ -24,11 +23,11 @@ namespace WebApi.RequireHttps.Tests
         [TearDown]
         public void Dispose()
         {
-            if (this._request != null)
-                this._request.Dispose();
-
             if (this._validator != null)
                 this._validator.Dispose();
+
+            if (this._request != null)
+                this._request.Dispose();
         }
 
         #endregion SetUp / TearDown
