@@ -1,4 +1,3 @@
-using Aliencube.WebApi.RequireHttps;
 using Aliencube.WebApi.RequireHttps.Interfaces;
 using FluentAssertions;
 using NSubstitute;
@@ -8,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 
-namespace WebApi.RequireHttps.Tests
+namespace Aliencube.WebApi.RequireHttps.Tests
 {
     [TestFixture]
     public class RequireHttpsHelperTest
@@ -16,21 +15,26 @@ namespace WebApi.RequireHttps.Tests
         #region SetUp / TearDown
 
         private HttpRequestMessage _request;
+        private IRequireHttpsConfigurationSettingsProvider _settings;
         private IRequireHttpsHelper _helper;
 
         [SetUp]
         public void Init()
         {
+            this._settings = Substitute.For<IRequireHttpsConfigurationSettingsProvider>();
         }
 
         [TearDown]
         public void Dispose()
         {
+            if (this._helper != null)
+                this._helper.Dispose();
+
             if (this._request != null)
                 this._request.Dispose();
 
-            if (this._helper != null)
-                this._helper.Dispose();
+            if (this._settings != null)
+                this._settings.Dispose();
         }
 
         #endregion SetUp / TearDown
@@ -72,6 +76,7 @@ namespace WebApi.RequireHttps.Tests
         {
             this._request = new HttpRequestMessage(new HttpMethod("GET"), new Uri(String.Format("{0}://localhost", protocol)));
             this._request.Headers.Add("X-Forwarded-Proto", headerProtocol);
+
             var actionContext = ContextUtil.GetActionContext(this._request);
 
             ApplicationServiceProviderType result;
@@ -80,11 +85,10 @@ namespace WebApi.RequireHttps.Tests
                            : providers.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                                       .Select(p => Enum.TryParse(p, true, out result) ? result : ApplicationServiceProviderType.Unknown);
 
-            var settings = Substitute.For<IRequireHttpsConfigurationSettingsProvider>();
-            settings.BypassHttps.Returns(bypassHttps);
-            settings.ApplicationServiceProviders.Returns(asps);
+            this._settings.BypassHttps.Returns(bypassHttps);
+            this._settings.ApplicationServiceProviders.Returns(asps);
 
-            this._helper = new RequireHttpsHelper(settings);
+            this._helper = new RequireHttpsHelper(this._settings);
             this._helper.IsHttpsConnection(actionContext).Should().Be(expected);
         }
 

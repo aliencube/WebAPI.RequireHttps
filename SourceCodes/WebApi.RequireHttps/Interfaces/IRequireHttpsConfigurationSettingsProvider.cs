@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Aliencube.WebApi.RequireHttps.Interfaces
 {
     /// <summary>
     /// This provides interfaces to the RequireHttpsConfigurationSettingsProvider class.
     /// </summary>
-    public interface IRequireHttpsConfigurationSettingsProvider
+    public interface IRequireHttpsConfigurationSettingsProvider : IDisposable
     {
         /// <summary>
         /// Gets the value that specifies whether to use HTTPS connection or not.

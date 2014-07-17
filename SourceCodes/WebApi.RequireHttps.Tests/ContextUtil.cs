@@ -5,7 +5,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using System.Web.Http.Routing;
 
-namespace WebApi.RequireHttps.Tests
+namespace Aliencube.WebApi.RequireHttps.Tests
 {
     /// <summary>
     /// This represents the context utility entity.
